@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="acik">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ulusal Perlit — Tasarım 2 · Fütüristik (Açık)</title>
+<meta name="description" content="Ulusal Perlit — perlitli ısı yalıtım sıvası, iç sıva, şap ve tarım perliti. Doğal yalıtım malzemesi ile gelen konfor.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,600;1,600&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+/*@THEME-START*/
+  --bg:#f6f8f4;
+  --bg2:#eef2ea;
+  --band:#ffffff;
+  --surface:#ffffff;
+  --surface2:#f2f6ef;
+  --line:rgba(22,36,60,.14);
+  --line2:rgba(22,36,60,.07);
+  --text:#16243c;
+  --muted:#57657e;
+  --dim:#8b98ab;
+  --navy:#222d70;
+  --navy2:#3a47a0;
+  --accent:#2f9e4a;
+  --accent2:#4cbb68;
+  --accent-ink:#1e7736;
+  --on-accent:#ffffff;
+  --grad:linear-gradient(96deg,#4cbb68 0%,#2f9e4a 100%);
+  --gradn:linear-gradient(96deg,#3a47a0 0%,#222d70 100%);
+  --glass:rgba(255,255,255,.82);
+  --glass-line:rgba(22,36,60,.12);
+  --veil1:rgba(10,20,34,.74);
+  --veil2:rgba(24,64,44,.52);
+  --shadow:22,36,60;
+  --sh1:0 2px 10px rgba(22,36,60,.06);
+  --sh2:0 24px 60px rgba(22,36,60,.14);
+  --ph:linear-gradient(135deg,#e7eee4,#f4f7f1);
+  --thumb:#c9d6c6;
+  --code:#1e7736;
+  --img-filter:none;
+  --hairline:rgba(22,36,60,.10);
+  color-scheme:light;
+
+  --radius:2px; --hud:rgba(47,158,74,.42); --hud-soft:rgba(47,158,74,.11);
+           --scene:#eef3ea; --scene-line:rgba(34,45,112,.10); --scene-text:#16243c; --scene-acc:#1e7736;
+           --nav-bg:rgba(246,248,244,.86); --glow:0 0 24px rgba(47,158,74,.3);
+  /*@THEME-END*/
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Manrope',sans-serif;line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-weight:800;line-height:1.1;letter-spacing:-.03em}
+.serif{font-family:'Fraunces',serif;font-style:italic;font-weight:600;color:var(--accent-ink)}
+.mono{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block;filter:var(--img-filter)}
+button,input,textarea{font-family:inherit;font-size:inherit;color:inherit}
+::selection{background:var(--accent);color:var(--on-accent)}
+::-webkit-scrollbar{width:9px;height:9px}::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--thumb)}
+
+/* ===== HUD ÜST BAR ===== */
+.hud{
+  position:fixed;top:0;left:0;right:0;z-index:900;height:62px;
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:20px;
+  padding:0 clamp(14px,3vw,32px);
+  background:var(--nav-bg);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--hud-soft);
+}
+.hud::after{content:"";position:absolute;left:0;bottom:-1px;height:1px;width:100%;
+  background:linear-gradient(90deg,transparent,var(--accent),transparent);opacity:.55}
+.hud .brand img{height:32px;width:auto}
+.hud .status{display:flex;gap:24px;justify-content:center;color:var(--muted);flex-wrap:wrap;overflow:hidden}
+.hud .status span{white-space:nowrap;display:flex;align-items:center;gap:7px}
+.hud .status b{color:var(--accent-ink);font-weight:700}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:var(--glow);animation:pulse 1.8s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.gridbtn{width:42px;height:42px;border:1px solid var(--hud);background:none;cursor:pointer;display:grid;place-items:center;position:relative;transition:.3s}
+.gridbtn:hover{background:var(--hud-soft)}
+.gridbtn i{display:grid;grid-template-columns:repeat(3,3px);gap:3px}
+.gridbtn i b{width:3px;height:3px;background:var(--accent);display:block;transition:.3s}
+.gridbtn.on i b{background:var(--text)}
+.gridbtn.on i{transform:rotate(45deg)}
+
+/* ===== TAM EKRAN MENÜ ===== */
+.full{position:fixed;inset:0;z-index:890;background:var(--bg);opacity:0;pointer-events:none;transition:opacity .45s;
+  display:grid;place-items:center;padding:80px 24px 40px}
+.full.on{opacity:1;pointer-events:auto}
+.full::before{content:"";position:absolute;inset:0;
+  background-image:linear-gradient(var(--hud-soft) 1px,transparent 1px),linear-gradient(90deg,var(--hud-soft) 1px,transparent 1px);
+  background-size:64px 64px;opacity:.7}
+.fmenu{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,5vw,80px);max-width:1000px;width:100%}
+.fmenu ul{list-style:none}
+.fmenu li{border-bottom:1px solid var(--line2)}
+.fmenu li a{display:flex;align-items:baseline;gap:16px;padding:16px 0;font-size:clamp(20px,3vw,32px);font-weight:700;letter-spacing:-.03em;transition:.3s;position:relative}
+.fmenu li a em{font-style:normal;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--dim);letter-spacing:.14em}
+.fmenu li a:hover{color:var(--accent-ink);padding-left:14px}
+.fside{align-self:end}
+.fside p{font-size:13.5px;color:var(--muted);margin-bottom:18px}
+.fside .mono{color:var(--accent-ink);display:block;margin-bottom:8px}
+
+/* ===== ORTAK BÖLÜM ===== */
+section{padding:clamp(70px,9vw,124px) clamp(18px,4vw,56px);position:relative}
+.wrap{max-width:1240px;margin:0 auto}
+.tag{display:inline-flex;align-items:center;gap:10px;color:var(--accent-ink);font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.24em;text-transform:uppercase;font-weight:500}
+.tag::before{content:"";width:26px;height:1px;background:var(--accent)}
+.tag::after{content:"◆";font-size:7px;opacity:.7}
+.stitle{font-size:clamp(27px,3.9vw,46px);margin:16px 0 0}
+.sdesc{color:var(--muted);max-width:62ch;margin-top:16px;font-size:15.5px}
+.shead{margin-bottom:clamp(32px,5vw,56px)}
+/* köşe parantezleri */
+.brk{position:relative}
+.brk::before,.brk::after{content:"";position:absolute;width:16px;height:16px;border:1px solid var(--hud);pointer-events:none}
+.brk::before{left:-1px;top:-1px;border-right:0;border-bottom:0}
+.brk::after{right:-1px;bottom:-1px;border-left:0;border-top:0}
+
+/* ===== HERO ===== */
+.hero{min-height:100svh;padding:0;display:grid;place-items:center;overflow:hidden;background:var(--scene)}
+#field{position:absolute;inset:0;width:100%;height:100%}
+.hero .grid{position:absolute;inset:0;
+  background-image:linear-gradient(var(--scene-line) 1px,transparent 1px),linear-gradient(90deg,var(--scene-line) 1px,transparent 1px);
+  background-size:70px 70px;mask-image:radial-gradient(ellipse 80% 70% at 50% 45%,#000 20%,transparent 78%);
+  -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 45%,#000 20%,transparent 78%)}
+.hero .scan{position:absolute;left:0;right:0;height:150px;pointer-events:none;
+  background:linear-gradient(180deg,transparent,var(--hud-soft),transparent);animation:scan 7s linear infinite}
+@keyframes scan{0%{top:-160px}100%{top:100%}}
+.hero-in{position:relative;z-index:3;text-align:center;padding:110px clamp(18px,4vw,40px) 40px;max-width:1080px;color:var(--scene-text)}
+.hero h1{font-size:clamp(38px,7.6vw,96px);letter-spacing:-.045em;line-height:.98}
+.hero h1 .serif{color:var(--scene-acc)}
+.hero .lead{color:var(--scene-text);opacity:.72;max-width:56ch;margin:26px auto 0;font-size:16px}
+.hero .kick{display:inline-flex;align-items:center;gap:10px;border:1px solid var(--hud);padding:8px 16px;margin-bottom:28px;
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--scene-acc)}
+.cells{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hud-soft);border:1px solid var(--hud-soft);margin-top:46px}
+.cells div{background:var(--scene);padding:20px 14px;text-align:left;position:relative;overflow:hidden}
+.cells div::before{content:"";position:absolute;left:0;top:0;width:100%;height:1px;background:var(--accent);transform:scaleX(0);transform-origin:left;transition:transform .8s}
+.cells div:hover::before{transform:scaleX(1)}
+.cells b{display:block;font-size:clamp(20px,2.6vw,30px);font-weight:800;letter-spacing:-.03em;color:var(--scene-acc);font-family:'JetBrains Mono',monospace}
+.cells span{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--scene-text);opacity:.55;margin-top:8px}
+.hero .acts{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  border:1px solid var(--accent);color:var(--scene-acc);transition:.3s;font-family:'JetBrains Mono',monospace;position:relative}
+.btn:hover{background:var(--accent);color:var(--on-accent);box-shadow:var(--glow)}
+.btn.pri{background:var(--accent);color:var(--on-accent)}
+.btn.pri:hover{filter:brightness(1.12)}
+.btn.dark{border-color:var(--accent);color:var(--accent-ink)}
+.btn.dark:hover{background:var(--accent);color:var(--on-accent)}
+
+/* ===== GENLEŞME SİMÜLATÖRÜ ===== */
+.sim{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,64px);align-items:center}
+.simbox{position:relative;background:var(--scene);border:1px solid var(--hud-soft);padding:34px 30px;overflow:hidden}
+.simbox::before{content:"";position:absolute;inset:0;
+  background-image:linear-gradient(var(--scene-line) 1px,transparent 1px),linear-gradient(90deg,var(--scene-line) 1px,transparent 1px);
+  background-size:34px 34px;opacity:.6}
+.simstage{position:relative;height:230px;display:grid;place-items:center;z-index:2}
+.blob{width:62px;height:62px;border-radius:50%;position:relative;transition:transform .12s linear;
+  background:radial-gradient(circle at 34% 30%,#ffffff,#dbe6dd 46%,#a9bcae 100%);
+  box-shadow:0 0 0 1px var(--hud),0 0 40px var(--hud-soft)}
+.blob::after{content:"";position:absolute;inset:-14px;border:1px dashed var(--hud);border-radius:50%;opacity:.5;animation:spin 14s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.simread{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hud-soft);border:1px solid var(--hud-soft);margin-top:18px}
+.simread div{background:var(--scene);padding:14px 16px}
+.simread b{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--scene-acc);display:block}
+.simread span{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--scene-text);opacity:.55}
+.slider{position:relative;z-index:2;margin-top:22px}
+.slider input{width:100%;-webkit-appearance:none;appearance:none;height:2px;background:var(--hud);outline:none;cursor:pointer}
+.slider input::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;background:var(--accent);border:2px solid var(--scene);border-radius:50%;box-shadow:var(--glow);cursor:pointer}
+.slider input::-moz-range-thumb{width:18px;height:18px;background:var(--accent);border:2px solid var(--scene);border-radius:50%;cursor:pointer}
+.slider .lab{display:flex;justify-content:space-between;margin-top:10px;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;color:var(--scene-text);opacity:.55;text-transform:uppercase}
+.simtxt p{color:var(--muted);font-size:15.5px}
+.simtxt p+p{margin-top:15px}
+.simtxt .rows{margin-top:28px;border-top:1px solid var(--line)}
+.simtxt .rows div{display:flex;justify-content:space-between;gap:14px;padding:13px 0;border-bottom:1px solid var(--line2);font-size:13.5px}
+.simtxt .rows span{color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;padding-top:3px}
+.simtxt .rows b{font-weight:700;font-family:'JetBrains Mono',monospace;font-size:14px}
+
+/* ===== ÖZELLİK KARTLARI ===== */
+.hcards{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.hcard{position:relative;border:1px solid var(--line);padding:28px 24px 30px;background:var(--surface);overflow:hidden;transition:.4s}
+.hcard::before{content:"";position:absolute;left:0;top:0;width:100%;height:2px;background:var(--grad);transform:scaleX(0);transform-origin:left;transition:transform .5s}
+.hcard:hover{border-color:var(--accent);transform:translateY(-4px)}
+.hcard:hover::before{transform:scaleX(1)}
+.hcard .n{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--dim)}
+.hcard svg{width:28px;height:28px;color:var(--accent);margin:16px 0 16px}
+.hcard h3{font-size:16.5px;margin-bottom:10px}
+.hcard p{font-size:13.5px;color:var(--muted);line-height:1.66}
+
+/* ===== ÜRÜNLER: SEKME + VERİ PANELİ ===== */
+.pwrap{display:grid;grid-template-columns:270px 1fr;gap:0;border:1px solid var(--line);background:var(--surface)}
+.ptabs{border-right:1px solid var(--line);display:flex;flex-direction:column}
+.ptabs::after{content:"";flex:1;min-height:0;background:linear-gradient(var(--surface2),transparent)}
+.ptab{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;padding:20px 20px;border-bottom:1px solid var(--line2);cursor:pointer;text-align:left;background:none;border-left:2px solid transparent;transition:.3s;position:relative}
+.ptab:hover{background:var(--surface2)}
+.ptab.on{background:var(--surface2);border-left-color:var(--accent)}
+.ptab em{font-style:normal;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;color:var(--dim)}
+.ptab b{display:block;font-size:14.5px;font-weight:700;letter-spacing:-.01em}
+.ptab.on b{color:var(--accent-ink)}
+.ptab i{display:block;font-style:normal;font-size:11.5px;color:var(--muted);margin-top:2px}
+.ppanel{padding:clamp(24px,3.4vw,42px);position:relative;min-height:520px}
+.ppanel .pv{display:none}
+.ppanel .pv.on{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(22px,3vw,42px);animation:fade .5s}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.pv h3{font-size:clamp(21px,2.6vw,30px);margin-bottom:14px}
+.pv .desc{color:var(--muted);font-size:14.5px}
+.pv .grid4{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line2);border:1px solid var(--line2);margin-top:24px}
+.pv .grid4 div{background:var(--surface);padding:15px 16px}
+.pv .grid4 span{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim)}
+.pv .grid4 b{display:block;font-family:'JetBrains Mono',monospace;font-size:16px;font-weight:700;margin-top:5px;color:var(--accent-ink)}
+.pv .list{list-style:none;margin-top:22px}
+.pv .list li{position:relative;padding-left:22px;font-size:13.5px;color:var(--muted);margin-top:9px}
+.pv .list li::before{content:"▸";position:absolute;left:0;color:var(--accent)}
+.pv figure{position:relative;overflow:hidden;background:var(--ph);aspect-ratio:4/5}
+.pv figure img{width:100%;height:100%;object-fit:cover}
+.pv figure figcaption{position:absolute;left:0;right:0;bottom:0;padding:12px 14px;background:linear-gradient(transparent,rgba(4,12,20,.8));
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#e6f2e8}
+.pv figure::before,.pv figure::after{content:"";position:absolute;width:18px;height:18px;border:1px solid rgba(255,255,255,.6);z-index:2}
+.pv figure::before{left:10px;top:10px;border-right:0;border-bottom:0}
+.pv figure::after{right:10px;top:10px;border-left:0;border-bottom:0}
+
+/* ===== TERMİNAL TABLO ===== */
+.term{border:1px solid var(--line);background:var(--surface);overflow:hidden}
+.termbar{display:flex;align-items:center;gap:10px;padding:11px 16px;border-bottom:1px solid var(--line);background:var(--surface2);
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.termbar u{width:8px;height:8px;border-radius:50%;background:var(--accent);text-decoration:none;display:block}
+.tblwrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:720px;font-family:'JetBrains Mono',monospace;font-size:12.5px}
+th,td{text-align:left;padding:13px 16px;border-bottom:1px solid var(--line2)}
+thead th{font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent-ink);background:var(--surface2)}
+tbody th{color:var(--muted);font-weight:400;width:220px}
+tbody tr:hover{background:var(--surface2)}
+td.hi{color:var(--accent-ink);font-weight:700}
+.tnote{font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.1em;color:var(--dim);margin-top:14px}
+
+/* ===== GALERİ FİLM ŞERİDİ ===== */
+.strip{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:14px}
+.strip figure{flex:0 0 clamp(230px,26vw,330px);scroll-snap-align:start;position:relative;aspect-ratio:3/4;overflow:hidden;background:var(--ph);border:1px solid var(--line)}
+.strip img{width:100%;height:100%;object-fit:cover;transition:transform .8s}
+.strip figure:hover img{transform:scale(1.06)}
+.strip figcaption{position:absolute;left:0;right:0;bottom:0;padding:12px 14px;background:linear-gradient(transparent,rgba(4,12,20,.82));
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:#e6f2e8}
+.strip figure::before{content:"";position:absolute;left:10px;top:10px;width:16px;height:16px;border:1px solid rgba(255,255,255,.55);border-right:0;border-bottom:0;z-index:2}
+
+/* ===== POLİTİKA / KURUMSAL ===== */
+.pol{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.pol article{border:1px solid var(--line);padding:28px 26px 32px;background:var(--surface);position:relative;transition:.35s}
+.pol article:hover{border-color:var(--accent)}
+.pol .mono{color:var(--accent-ink);display:block;margin-bottom:12px}
+.pol h3{font-size:18px;margin-bottom:12px}
+.pol p{font-size:13.5px;color:var(--muted)}
+.pol ul{list-style:none;margin-top:14px;font-size:13px;color:var(--muted)}
+.pol li{position:relative;padding-left:18px;margin-top:7px}
+.pol li::before{content:"·";position:absolute;left:4px;color:var(--accent);font-weight:700}
+.corp{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(28px,5vw,64px);align-items:center}
+.corpq{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(20px,2.6vw,30px);line-height:1.42;font-weight:600}
+.corpq b{font-style:normal;color:var(--accent-ink)}
+.mv{margin-top:30px;display:grid;gap:1px;background:var(--line2);border:1px solid var(--line2)}
+.mv div{background:var(--surface);padding:20px 22px}
+.mv h4{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--accent-ink);margin-bottom:8px}
+.mv p{font-size:14px;color:var(--muted)}
+.corpimg{position:relative;aspect-ratio:4/5;overflow:hidden;background:var(--ph);border:1px solid var(--line)}
+.corpimg img{width:100%;height:100%;object-fit:cover}
+
+/* ===== İLETİŞİM ===== */
+.cont{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(28px,5vw,64px)}
+.cinfo{display:grid;gap:1px;background:var(--line2);border:1px solid var(--line2)}
+.cinfo div{background:var(--surface);padding:18px 20px}
+.cinfo small{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);display:block;margin-bottom:6px}
+.cinfo b{font-weight:600;font-size:14px}
+form{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.f{grid-column:span 1}
+.f.full{grid-column:1/-1}
+.f label{display:block;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);margin-bottom:7px}
+.f input,.f textarea{width:100%;background:var(--surface);border:1px solid var(--line);padding:13px 15px;outline:none;transition:.3s;font-size:14px}
+.f textarea{resize:vertical;min-height:120px}
+.f input:focus,.f textarea:focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--hud-soft)}
+form .sub{grid-column:1/-1}
+.kv{grid-column:1/-1;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--dim)}
+
+/* ===== FOOTER ===== */
+footer{border-top:1px solid var(--line);background:var(--bg2);padding:clamp(50px,6vw,78px) clamp(18px,4vw,56px) 28px}
+.fgrid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1.2fr;gap:32px;max-width:1240px;margin:0 auto}
+.fgrid img{height:40px;margin-bottom:16px}
+.fgrid p{font-size:13px;color:var(--muted);max-width:34ch}
+.fgrid h5{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--accent-ink);margin-bottom:14px}
+.fgrid ul{list-style:none;font-size:13.5px}
+.fgrid li{margin-bottom:9px;color:var(--muted)}
+.fgrid li a:hover{color:var(--accent-ink)}
+.fbot{max-width:1240px;margin:40px auto 0;padding-top:20px;border-top:1px solid var(--line2);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+
+.badge{position:fixed;left:14px;bottom:14px;z-index:950;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;
+  background:var(--accent);color:var(--on-accent);padding:8px 14px;opacity:.9}
+
+.rv{opacity:0;transform:translateY(20px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+@media(max-width:1080px){
+  .hud .status span:nth-child(n+3){display:none}
+  .cells{grid-template-columns:1fr 1fr}
+  .sim,.corp,.cont,.ppanel .pv.on{grid-template-columns:1fr}
+  .hcards{grid-template-columns:1fr 1fr}
+  .pwrap{grid-template-columns:1fr}
+  .ptabs{flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--line)}
+  .ptab{border-bottom:0;border-left:0;border-top:2px solid transparent;min-width:210px}
+  .ptab.on{border-left-color:transparent;border-top-color:var(--accent)}
+  .ppanel{min-height:0}
+  .pol{grid-template-columns:1fr}
+  .fmenu{grid-template-columns:1fr}
+  .fgrid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:680px){
+  .hud .status{display:none}
+  .cells{grid-template-columns:1fr}
+  .hcards{grid-template-columns:1fr}
+  form{grid-template-columns:1fr}
+  .fgrid{grid-template-columns:1fr}
+  .simread{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="hud">
+  <a class="brand" href="#"><img src="../Gorseller/logo.png" alt="Ulusal Perlit"></a>
+  <div class="status mono">
+    <span><i class="dot"></i> SİSTEM AKTİF</span>
+    <span>GENLEŞME ORANI <b>×11.7</b></span>
+    <span>YANGIN SINIFI <b>A1</b></span>
+    <span id="clock">--:--:--</span>
+  </div>
+  <button class="gridbtn" id="gridbtn" aria-label="Menü"><i><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b><b></b></i></button>
+</header>
+
+<div class="full" id="full">
+  <div class="fmenu">
+    <ul>
+      <li><a href="#perlit"><em>01</em> Perlit Nedir</a></li>
+      <li><a href="#ozellikler"><em>02</em> Neden Perlit</a></li>
+      <li><a href="#urunler"><em>03</em> Ürünler</a></li>
+      <li><a href="#teknik"><em>04</em> Teknik Veriler</a></li>
+      <li><a href="#galeri"><em>05</em> Galeri</a></li>
+      <li><a href="#kurumsal"><em>06</em> Kurumsal</a></li>
+      <li><a href="#iletisim"><em>07</em> İletişim</a></li>
+    </ul>
+    <div class="fside">
+      <span class="mono">İLETİŞİM KANALI</span>
+      <p>Atatürk Mah. Turgut Özal Bulvarı 42 A Ada Gardenya 7/1 Plaza K:6 D:42 Ataşehir / İstanbul</p>
+      <p><b>+90 216 455 86 63</b><br>info@ulusalyapi.com</p>
+      <a class="btn dark" href="#iletisim">Teklif Alın</a>
+    </div>
+  </div>
+</div>
+
+<main>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <canvas id="field"></canvas>
+  <div class="grid"></div>
+  <div class="scan"></div>
+  <div class="hero-in">
+    <span class="kick">◆ Ulusal Yapı Markası · Perlit Teknolojileri</span>
+    <h1>Volkanik camdan<br><span class="serif">yaşanabilir konfora.</span></h1>
+    <p class="lead">Perlit, 1000 °C'nin üzerinde genleşerek hacminin kat kat üstüne çıkar. Geride kalan milyonlarca hava hücresi; ısıyı, sesi ve ateşi durdurur.</p>
+    <div class="acts">
+      <a class="btn pri" href="#urunler">Ürün Verilerini Aç</a>
+      <a class="btn" href="#perlit">Genleşmeyi İncele</a>
+    </div>
+    <div class="cells">
+      <div><b>A1</b><span>Yangına tepki sınıfı</span></div>
+      <div><b>400</b><span>kg/m³ · Isı yalıtım sıvası</span></div>
+      <div><b>×2–3</b><span>Klasik sıvaya göre hafiflik</span></div>
+      <div><b>%90+</b><span>Tarım perliti gözenekliliği</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PERLİT NEDİR / SİMÜLATÖR ================= -->
+<section id="perlit">
+  <div class="wrap">
+    <div class="shead rv">
+      <span class="tag">01 / Hammadde</span>
+      <h2 class="stitle">Genleşme <span class="serif">simülatörü</span></h2>
+      <p class="sdesc">Perlit asidik bir volkanik camdır. Isıyla genleşme özelliği vardır; genleştirildiğinde çok hafif ve gözenekli hâle geçer. Aşağıdaki kolu sürükleyerek yoğunluk değişimini görebilirsiniz.</p>
+    </div>
+    <div class="sim">
+      <div class="simbox brk rv">
+        <div class="simstage"><div class="blob" id="blob"></div></div>
+        <div class="slider">
+          <input type="range" id="rng" min="0" max="100" value="0">
+          <div class="lab"><span>HAM KAYAÇ</span><span>ISIL İŞLEM</span><span>GENLEŞMİŞ</span></div>
+        </div>
+        <div class="simread">
+          <div><b id="dens">2100</b><span>kg/m³ · yoğunluk</span></div>
+          <div><b id="vol">×1,0</b><span>hacim katsayısı</span></div>
+        </div>
+      </div>
+      <div class="simtxt rv">
+        <p>Ham perlit kayacı, yapısındaki bağlı su sayesinde ısıtıldığında patlar gibi genleşir. Bu sırada içinde milyonlarca kapalı hava hücresi oluşur — ısı ve ses yalıtımını sağlayan da tam olarak bu gözenekli yapıdır.</p>
+        <p>Doğal bir maden olduğu için kanserojen madde içermez, kendi karbon salınımını yapmaz; ısıtma ve soğutma ihtiyacını düşürerek binanın karbon ayak izini de azaltır.</p>
+        <div class="rows">
+          <div><span>Ham</span><b>2000 – 2100 kg/m³</b></div>
+          <div><span>Kırılmış · elenmiş</span><b>2200 – 2400 kg/m³</b></div>
+          <div><span>Genleştirilmiş</span><b>180 kg/m³'e kadar</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ÖZELLİKLER ================= -->
+<section id="ozellikler" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="shead rv">
+      <span class="tag">02 / Malzeme Karakteri</span>
+      <h2 class="stitle">Dört ölçütte <span class="serif">perlit farkı</span></h2>
+    </div>
+    <div class="hcards rv">
+      <article class="hcard">
+        <span class="n">/ 01</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2s4 4.5 4 8a4 4 0 0 1-8 0c0-1.4.6-2.7 1.3-3.8"/><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.7-2-5"/><path d="M12 22a7 7 0 0 1-7-7c0-2 1-3.7 2-5"/></svg>
+        <h3>Yanmazlık</h3>
+        <p>BYKHY'nin istediği A1 sınıfı yanmaz malzeme kullanımını karşılar. Yangının gelişimine neden olmaz, aksine geciktirir.</p>
+      </article>
+      <article class="hcard">
+        <span class="n">/ 02</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z"/><path d="M2 21c0-3 1.9-5.4 5.1-6C9.5 14.5 12 13 13 12"/></svg>
+        <h3>Ekolojik</h3>
+        <p>Doğal maden olması sebebiyle kanserojen madde içermez. Kendi karbon salınımını yapmaz; ısıtma-soğutma yükünü düşürür.</p>
+      </article>
+      <article class="hcard">
+        <span class="n">/ 03</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>
+        <h3>Yalıtım</h3>
+        <p>Düşük ısı iletkenliği ile ısı yalıtımı, gözenekli yapısıyla ses yalıtımı sağlar. Su itici özelliğiyle bünyesine su almaz.</p>
+      </article>
+      <article class="hcard">
+        <span class="n">/ 04</span>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 20h16"/><path d="m6 16 6-12 6 12"/><path d="M9 16h6"/></svg>
+        <h3>Uygulama Kolaylığı</h3>
+        <p>Hafifliğiyle kolay taşıma ve istifleme. Dış cephede kara sıva, iç cephede alçı sıva gibi; el veya makine ile uygulanır.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ÜRÜNLER ================= -->
+<section id="urunler">
+  <div class="wrap">
+    <div class="shead rv">
+      <span class="tag">03 / Ürün Veri Tabanı</span>
+      <h2 class="stitle">Dört ürün, <span class="serif">tam teknik kayıt</span></h2>
+    </div>
+    <div class="pwrap rv">
+      <div class="ptabs" id="ptabs">
+        <button class="ptab on" data-i="0"><em>01</em><span><b>Isı Yalıtım Sıvası</b><i>Dış + iç cephe</i></span></button>
+        <button class="ptab" data-i="1"><em>02</em><span><b>Perlitli İç Sıva</b><i>İç cephe kaba sıva</i></span></button>
+        <button class="ptab" data-i="2"><em>03</em><span><b>Perlitli Şap</b><i>Teras ve döşeme</i></span></button>
+        <button class="ptab" data-i="3"><em>04</em><span><b>Tarım Perliti</b><i>Sera ve topraksız tarım</i></span></button>
+      </div>
+      <div class="ppanel">
+
+        <div class="pv on" data-i="0">
+          <div>
+            <h3>Perlitli Isı Yalıtım Sıvası</h3>
+            <p class="desc">Çimento esaslı ve perlitli, manuel veya makine ile uygulanabilen, ısı ve ses yalıtımı sağlayan sıva harcı. İç ve dış cephelerde tuğla, beton, briket ve gaz beton yüzeylerde kullanılır.</p>
+            <div class="grid4">
+              <div><span>Birim yığın ağırlığı</span><b data-count="400">400 ± 50</b></div>
+              <div><span>Basınç dayanımı</span><b>CS II</b></div>
+              <div><span>Isıl iletkenlik</span><b>T1</b></div>
+              <div><span>Yangına tepki</span><b>A1</b></div>
+              <div><span>Uygulama kalınlığı</span><b>10–30 mm</b></div>
+              <div><span>Sarfiyat / 1 cm</span><b>4–4,5 kg/m²</b></div>
+            </div>
+            <ul class="list">
+              <li>Klasik sıvalara kıyasla 2–3 kat daha hafif</li>
+              <li>Çalışılabilme süresi 20 dakika, kuruma 4–6 gün</li>
+              <li>13 kg kraft torba · raf ömrü 1 yıl</li>
+            </ul>
+          </div>
+          <figure><img src="../Gorseller/p-isisiva.jpg" alt="Perlitli ısı yalıtım sıvası"><figcaption>Perlitli dış cephe sıva harcı · 13 kg</figcaption></figure>
+        </div>
+
+        <div class="pv" data-i="1">
+          <div>
+            <h3>Perlitli İç Sıva</h3>
+            <p class="desc">El ve makine ile uygulanabilen, ses ve ısı yalıtımı sağlayan çimento esaslı perlitli hazır sıva harcı. İç mekânlarda kaba sıva olarak uygulanır.</p>
+            <div class="grid4">
+              <div><span>Kuru birim ağırlık</span><b>500 ± 150</b></div>
+              <div><span>Basınç dayanımı</span><b>CS I</b></div>
+              <div><span>Isıl iletkenlik</span><b>T1</b></div>
+              <div><span>Yangına tepki</span><b>A1</b></div>
+              <div><span>Uygulama kalınlığı</span><b>15–20 mm</b></div>
+              <div><span>Sarfiyat / 1 cm</span><b>4,5–5 kg/m²</b></div>
+            </div>
+            <ul class="list">
+              <li>Nefes alan, ses yutucu yapı</li>
+              <li>Kuruma süresi 4–6 gün</li>
+              <li>16 kg kraft torba · shrinkli palet</li>
+            </ul>
+          </div>
+          <figure><img loading="lazy" src="../Gorseller/p-icsiva.jpg" alt="Perlitli iç sıva"><figcaption>Perlitli iç cephe sıva harcı</figcaption></figure>
+        </div>
+
+        <div class="pv" data-i="2">
+          <div>
+            <h3>Perlitli Şap</h3>
+            <p class="desc">Isı ve ses yalıtımı sağlayan, çimento esaslı ve perlitli, manuel veya makine ile uygulanabilen hafif yalıtım şapı. Seramik, parke ve laminat kaplamaları öncesinde kullanılır.</p>
+            <div class="grid4">
+              <div><span>Kuru birim ağırlık</span><b>500 ± 70</b></div>
+              <div><span>Basınç dayanımı</span><b>C5</b></div>
+              <div><span>Standart</span><b>TS EN 13813</b></div>
+              <div><span>Yangına tepki</span><b>A1</b></div>
+              <div><span>Uygulama kalınlığı</span><b>30–70 mm</b></div>
+              <div><span>Sarfiyat / 1 cm</span><b>5,5–6,5 kg/m²</b></div>
+            </div>
+            <ul class="list">
+              <li>Klasik şaplara göre 5–7 kat daha hafif</li>
+              <li>Hafif ve orta yoğunluklu yaya trafiği</li>
+              <li>20 kg kraft torba · shrinkli palet</li>
+            </ul>
+          </div>
+          <figure><img loading="lazy" src="../Gorseller/p-sap.jpg" alt="Perlitli şap"><figcaption>Perlitli hafif yalıtım şapı</figcaption></figure>
+        </div>
+
+        <div class="pv" data-i="3">
+          <div>
+            <h3>Tarım Perliti</h3>
+            <p class="desc">Seracılık, sebze yetiştiriciliği, fidecilik, çiçekçilik, mantarcılık ve topraksız tarım uygulamalarında toprak düzenleyicisi olarak kullanılan, radyoaktif içermeyen hafif malzeme.</p>
+            <div class="grid4">
+              <div><span>Toplam gözeneklilik</span><b>%90+</b></div>
+              <div><span>Havalanma gözenekliliği</span><b>≈ %60</b></div>
+              <div><span>pH değeri</span><b>6,5 – 7,5</b></div>
+              <div><span>Radyoaktivite</span><b>YOK</b></div>
+              <div><span>Çözünebilir iyon</span><b>ÇOK DÜŞÜK</b></div>
+              <div><span>Hastalık / yabancı ot</span><b>TAŞIMAZ</b></div>
+            </div>
+            <ul class="list">
+              <li>Tuz ve alkalilik sorunu yaratmaz</li>
+              <li>Düşük ısı iletkenliğiyle kökü sıcaklık şokundan korur</li>
+              <li>Fide harçlarında katkı, topraksız tarımda yetiştirme ortamı</li>
+            </ul>
+          </div>
+          <figure><img loading="lazy" src="../Gorseller/p-tarim.jpg" alt="Tarım perliti"><figcaption>Genleştirilmiş tarım perliti</figcaption></figure>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TEKNİK ================= -->
+<section id="teknik" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="shead rv">
+      <span class="tag">04 / Karşılaştırma</span>
+      <h2 class="stitle">Teknik veriler <span class="serif">yan yana</span></h2>
+    </div>
+    <div class="term rv">
+      <div class="termbar"><u></u> ulusalperlit · teknik-foy.csv</div>
+      <div class="tblwrap">
+        <table>
+          <thead><tr><th>parametre</th><th>ısı yalıtım sıvası</th><th>iç sıva</th><th>şap</th></tr></thead>
+          <tbody>
+            <tr><th>kullanım</th><td>dış + iç cephe</td><td>iç cephe (kaba)</td><td>teras · döşeme</td></tr>
+            <tr><th>renk</th><td>beyaz</td><td>beyaz</td><td>gri</td></tr>
+            <tr><th>kuru birim ağırlık</th><td>400 ± 50 kg/m³</td><td>500 ± 150 kg/m³</td><td>500 ± 70 kg/m³</td></tr>
+            <tr><th>basınç dayanımı</th><td>CS II</td><td>CS I</td><td>C5 · TS EN 13813</td></tr>
+            <tr><th>ısıl iletkenlik</th><td>T1</td><td>T1</td><td>—</td></tr>
+            <tr><th>yangına tepki</th><td class="hi">A1</td><td class="hi">A1</td><td class="hi">A1</td></tr>
+            <tr><th>uygulama kalınlığı</th><td>10–30 mm</td><td>15–20 mm</td><td>30–70 mm</td></tr>
+            <tr><th>sarfiyat (1 cm)</th><td>4–4,5 kg/m²</td><td>4,5–5 kg/m²</td><td>5,5–6,5 kg/m²</td></tr>
+            <tr><th>kuruma süresi</th><td>4–6 gün</td><td>4–6 gün</td><td>4–6 gün</td></tr>
+            <tr><th>ambalaj</th><td>13 kg kraft</td><td>16 kg kraft</td><td>20 kg kraft</td></tr>
+            <tr><th>raf ömrü</th><td>1 yıl</td><td>1 yıl</td><td>1 yıl</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <p class="tnote rv">// depolama: kapalı orijinal ambalajında, serin ve kuru ortamda. raf ömrü üretim tarihinden itibaren 1 yıl.</p>
+  </div>
+</section>
+
+<!-- ================= GALERİ ================= -->
+<section id="galeri">
+  <div class="wrap">
+    <div class="shead rv">
+      <span class="tag">05 / Saha Kayıtları</span>
+      <h2 class="stitle">Üretimden <span class="serif">sevkiyata</span></h2>
+    </div>
+    <div class="strip rv">
+      <figure><img loading="lazy" src="../Gorseller/v-isisiva.jpg" alt="Dış cephe sıva paleti"><figcaption>01 · Dış cephe · 13 kg</figcaption></figure>
+      <figure><img loading="lazy" src="../Gorseller/v-icsiva.jpg" alt="İç cephe sıva paleti"><figcaption>02 · İç cephe</figcaption></figure>
+      <figure><img loading="lazy" src="../Gorseller/v-icsiva-detay.jpg" alt="Torba detay"><figcaption>03 · Ambalaj detayı</figcaption></figure>
+      <figure><img loading="lazy" src="../Gorseller/v-lojistik.jpg" alt="Konteyner yükleme"><figcaption>04 · İhracat yüklemesi</figcaption></figure>
+      <figure><img loading="lazy" src="../Gorseller/p-sap.jpg" alt="Depo"><figcaption>05 · Depo</figcaption></figure>
+      <figure><img loading="lazy" src="../Gorseller/band-maden.jpg" alt="Perlit kayacı"><figcaption>06 · Hammadde</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= POLİTİKALAR ================= -->
+<section id="politikalar" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="shead rv">
+      <span class="tag">06 / Politikalarımız</span>
+      <h2 class="stitle">Sürdürülebilir ve <span class="serif">ilkeli üretim</span></h2>
+    </div>
+    <div class="pol rv">
+      <article><span class="mono">/ KALİTE</span><h3>Kalite Politikası</h3><p>Üstlendiği her işi yaparken müşteri taleplerini ve yürürlükteki yasal mevzuat şartlarını karşılayan ürünler sunar.</p><ul><li>Tecrübeli yönetim, teknik iş gücü</li><li>Sürekli öğrenme ve gelişim</li><li>Ürün kalitesinde süreklilik</li></ul></article>
+      <article><span class="mono">/ İSG</span><h3>İş Sağlığı ve Güvenliği</h3><p>Yaralanmaları ve sağlık bozulmalarını önlemek için her türlü önlemi alır.</p><ul><li>Eğitim ve farkındalık programları</li><li>Çalışan ve etkilenen tarafların korunması</li><li>Tehlikelerin erken kontrolü</li></ul></article>
+      <article><span class="mono">/ ÇEVRE</span><h3>Çevre Politikası</h3><p>Enerji ve doğal kaynakları en etkin şekilde kullanır; israfı önler.</p><ul><li>Kontrollü atık yönetimi</li><li>Hava, su ve toprak kirliliğinin önlenmesi</li><li>Sürekli izleme ve erken tespit</li></ul></article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= KURUMSAL ================= -->
+<section id="kurumsal">
+  <div class="wrap">
+    <div class="shead rv">
+      <span class="tag">07 / Kurumsal</span>
+      <h2 class="stitle">Ulusal Yapı'nın <span class="serif">perlit markası</span></h2>
+    </div>
+    <div class="corp">
+      <div class="rv">
+        <p class="corpq">Ulusal Perlit, inşaat sektöründe uzun yıllar tecrübesi olan, sektöre hem malzeme üretimi ve tedariği hem de uygulama alanlarında hizmetlerde bulunmuş <b>Ulusal Yapı</b>'nın bir markasıdır.</p>
+        <div class="mv">
+          <div><h4>MİSYON</h4><p>Yapı sektöründe satış ve uygulamayı en iyi hizmet kalitesiyle müşterilerimize sunmak; kurumsal ve ilkeli yaklaşımımızla sektörde fark yaratmak.</p></div>
+          <div><h4>VİZYON</h4><p>Çağdaş ve yenilikçi yapımızla, faaliyet gösterdiğimiz sektörlerde daima en iyisini gerçekleştirerek çalışanlarımıza, müşterilerimize ve ülkemize katma değer sağlamak.</p></div>
+        </div>
+      </div>
+      <figure class="corpimg brk rv"><img loading="lazy" src="../Gorseller/v-lojistik.jpg" alt="Ulusal Perlit sevkiyat"></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= İLETİŞİM ================= -->
+<section id="iletisim" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="shead rv">
+      <span class="tag">08 / İletişim</span>
+      <h2 class="stitle">Projeniz için <span class="serif">hattı açın</span></h2>
+    </div>
+    <div class="cont">
+      <div class="cinfo rv">
+        <div><small>ADRES</small><b>Atatürk Mah. Turgut Özal Bulvarı 42 A Ada Gardenya 7/1 Plaza K:6 D:42 Ataşehir / İSTANBUL</b></div>
+        <div><small>TELEFON</small><b>+90 216 455 86 63 · +90 216 455 88 35</b></div>
+        <div><small>FAKS</small><b>+90 216 455 82 94</b></div>
+        <div><small>E-POSTA</small><b>info@ulusalyapi.com</b></div>
+        <div><small>ÜNVAN</small><b>Ulusal Yapı Danışmanlık ve Dış Tic. Ltd. Şti.</b></div>
+      </div>
+      <form class="rv" onsubmit="return false">
+        <div class="f"><label>ADINIZ</label><input placeholder="Ad Soyad"></div>
+        <div class="f"><label>E-POSTA</label><input type="email" placeholder="ornek@firma.com"></div>
+        <div class="f full"><label>KONU</label><input placeholder="Talebinizin konusu"></div>
+        <div class="f full"><label>İLETİNİZ</label><textarea placeholder="Projeniz, metrekare, uygulama detayı…"></textarea></div>
+        <div class="sub"><button class="btn pri" type="submit">Gönder</button></div>
+        <p class="kv">// gönderilen bilgiler kvkk aydınlatma metni kapsamında işlenir</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="fgrid">
+    <div><img src="../Gorseller/logo.png" alt="Ulusal Perlit"><p>Doğal yalıtım malzemesi ile gelen konfor. Perlitli sıva, şap ve tarım perliti çözümleri.</p></div>
+    <div><h5>ÜRÜNLER</h5><ul><li><a href="#urunler">Perlitli Isı Yalıtım Sıvası</a></li><li><a href="#urunler">Perlitli İç Sıva</a></li><li><a href="#urunler">Perlitli Şap</a></li><li><a href="#urunler">Tarım Perliti</a></li></ul></div>
+    <div><h5>KURUMSAL</h5><ul><li><a href="#kurumsal">Hakkımızda</a></li><li><a href="#politikalar">Politikalarımız</a></li><li><a href="#galeri">Galeri</a></li><li><a href="#teknik">E-Katalog</a></li></ul></div>
+    <div><h5>İLETİŞİM</h5><ul><li>Ataşehir / İstanbul</li><li><a href="tel:+902164558663">+90 216 455 86 63</a></li><li><a href="mailto:info@ulusalyapi.com">info@ulusalyapi.com</a></li></ul></div>
+  </div>
+  <div class="fbot"><span>© 2026 Ulusal Perlit — Ulusal Yapı Danışmanlık ve Dış Tic. Ltd. Şti.</span><span>KVKK · Çerez Politikası</span></div>
+</footer>
+
+<div class="badge">Tasarım 2 · Fütüristik</div>
+
+<script>
+/* ---- saat ---- */
+const clock=document.getElementById('clock');
+setInterval(()=>{const d=new Date();clock.textContent=d.toLocaleTimeString('tr-TR')},1000);
+
+/* ---- menü ---- */
+const gb=document.getElementById('gridbtn'), full=document.getElementById('full');
+gb.onclick=()=>{full.classList.toggle('on');gb.classList.toggle('on')};
+full.querySelectorAll('a').forEach(a=>a.onclick=()=>{full.classList.remove('on');gb.classList.remove('on')});
+
+/* ---- parçacık alanı ---- */
+(function(){
+  const cv=document.getElementById('field'), ctx=cv.getContext('2d');
+  const cs=getComputedStyle(document.documentElement);
+  const acc=cs.getPropertyValue('--accent').trim();
+  const dark=document.documentElement.dataset.theme==='kapali';
+  let W,H,ps=[];
+  function size(){W=cv.width=cv.offsetWidth*devicePixelRatio;H=cv.height=cv.offsetHeight*devicePixelRatio}
+  function mk(){return{x:Math.random()*W,y:H+Math.random()*H*.4,r:(1+Math.random()*2.4)*devicePixelRatio,
+    v:(.18+Math.random()*.55)*devicePixelRatio,g:.0012+Math.random()*.004,s:1,o:.18+Math.random()*.5,hot:Math.random()<.16}}
+  function init(){size();ps=[];const n=Math.min(150,Math.round(W/(14*devicePixelRatio)));for(let i=0;i<n;i++){const p=mk();p.y=Math.random()*H;p.s=1+Math.random()*1.6;ps.push(p)}}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    for(const p of ps){
+      p.y-=p.v; p.s+=p.g;
+      if(p.y< -30||p.s>3.2){Object.assign(p,mk())}
+      const r=p.r*p.s;
+      ctx.beginPath();ctx.arc(p.x,p.y,r,0,6.284);
+      if(p.hot){ctx.fillStyle=acc;ctx.globalAlpha=p.o*.85;ctx.shadowBlur=14*devicePixelRatio;ctx.shadowColor=acc}
+      else{ctx.fillStyle=dark?'#dfeee4':'#3d5a49';ctx.globalAlpha=p.o*(dark?.6:.32);ctx.shadowBlur=0}
+      ctx.fill();
+    }
+    ctx.globalAlpha=1;ctx.shadowBlur=0;
+    requestAnimationFrame(draw);
+  }
+  init();draw();addEventListener('resize',init);
+})();
+
+/* ---- genleşme simülatörü ---- */
+(function(){
+  const rng=document.getElementById('rng'),blob=document.getElementById('blob'),
+        dens=document.getElementById('dens'),vol=document.getElementById('vol');
+  function upd(){
+    const t=rng.value/100;
+    const d=Math.round(2100-(2100-180)*t);
+    const v=(2100/d);
+    dens.textContent=d.toLocaleString('tr-TR');
+    vol.textContent='×'+v.toFixed(1).replace('.',',');
+    blob.style.transform='scale('+(1+t*1.85)+')';
+    blob.style.filter='brightness('+(1+t*.16)+')';
+  }
+  rng.addEventListener('input',upd);upd();
+})();
+
+/* ---- ürün sekmeleri ---- */
+document.querySelectorAll('.ptab').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('.ptab').forEach(x=>x.classList.remove('on'));
+    document.querySelectorAll('.pv').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    document.querySelector('.pv[data-i="'+b.dataset.i+'"]').classList.add('on');
+  };
+});
+
+/* ---- görünürlük ---- */
+const io=new IntersectionObserver(en=>en.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
+document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

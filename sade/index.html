@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="tr" data-theme="acik">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ulusal Perlit — Tasarım 1 · Sade (Açık)</title>
+<meta name="description" content="Ulusal Perlit — perlitli ısı yalıtım sıvası, iç sıva, şap ve tarım perliti. Doğal yalıtım malzemesi ile gelen konfor.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Fraunces:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+/*@THEME-START*/
+  --bg:#f6f8f4;
+  --bg2:#eef2ea;
+  --band:#ffffff;
+  --surface:#ffffff;
+  --surface2:#f2f6ef;
+  --line:rgba(22,36,60,.14);
+  --line2:rgba(22,36,60,.07);
+  --text:#16243c;
+  --muted:#57657e;
+  --dim:#8b98ab;
+  --navy:#222d70;
+  --navy2:#3a47a0;
+  --accent:#2f9e4a;
+  --accent2:#4cbb68;
+  --accent-ink:#1e7736;
+  --on-accent:#ffffff;
+  --grad:linear-gradient(96deg,#4cbb68 0%,#2f9e4a 100%);
+  --gradn:linear-gradient(96deg,#3a47a0 0%,#222d70 100%);
+  --glass:rgba(255,255,255,.82);
+  --glass-line:rgba(22,36,60,.12);
+  --veil1:rgba(10,20,34,.74);
+  --veil2:rgba(24,64,44,.52);
+  --shadow:22,36,60;
+  --sh1:0 2px 10px rgba(22,36,60,.06);
+  --sh2:0 24px 60px rgba(22,36,60,.14);
+  --ph:linear-gradient(135deg,#e7eee4,#f4f7f1);
+  --thumb:#c9d6c6;
+  --code:#1e7736;
+  --img-filter:none;
+  --hairline:rgba(22,36,60,.10);
+  color-scheme:light;
+
+  --radius:3px; --nav-bg:rgba(246,248,244,.92); --rule:rgba(22,36,60,.16);
+  /*@THEME-END*/
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Manrope',sans-serif;line-height:1.72;font-weight:400;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{font-family:'Manrope',sans-serif;font-weight:700;line-height:1.14;letter-spacing:-.02em}
+.serif{font-family:'Fraunces',serif;font-style:italic;font-weight:500;letter-spacing:-.01em}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block;filter:var(--img-filter)}
+button,input,textarea,select{font-family:inherit;font-size:inherit;color:inherit}
+::selection{background:var(--accent);color:var(--on-accent)}
+::-webkit-scrollbar{width:9px}::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--thumb)}
+
+/* ---------- ÜST ŞERİT ---------- */
+.tape{
+  display:flex;align-items:center;justify-content:space-between;gap:20px;
+  padding:9px clamp(18px,5vw,64px);
+  border-bottom:1px solid var(--line2);
+  font-size:12px;color:var(--muted);letter-spacing:.02em;
+}
+.tape ul{display:flex;gap:26px;list-style:none;flex-wrap:wrap}
+.tape li{display:flex;align-items:center;gap:7px}
+.tape svg{opacity:.55;flex:none}
+.tape .lang{display:flex;gap:8px;font-weight:600;letter-spacing:.12em;font-size:11px}
+.tape .lang b{color:var(--text)}
+.tape .lang span{color:var(--dim)}
+
+/* ---------- MENÜ ---------- */
+.nav{
+  position:sticky;top:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;gap:24px;
+  padding:16px clamp(18px,5vw,64px);
+  background:var(--nav-bg);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid transparent;transition:border-color .3s,padding .3s;
+}
+.nav.stuck{border-bottom-color:var(--line);padding-top:11px;padding-bottom:11px}
+.nav .brand img{height:42px;width:auto;transition:height .3s}
+.nav.stuck .brand img{height:34px}
+.nav ul{display:flex;gap:30px;list-style:none}
+.nav ul a{font-size:13.5px;font-weight:500;color:var(--muted);position:relative;padding:4px 0;transition:color .25s}
+.nav ul a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1px;background:var(--accent);transition:right .35s cubic-bezier(.2,.8,.2,1)}
+.nav ul a:hover{color:var(--text)}
+.nav ul a:hover::after{right:0}
+.nav .quote{display:inline-flex;align-items:center;gap:9px;font-size:13.5px;font-weight:600;color:var(--text);white-space:nowrap}
+.nav .quote i{width:26px;height:1px;background:var(--accent);display:block;transition:width .3s}
+.nav .quote:hover i{width:40px}
+#burger{display:none;background:none;border:0;cursor:pointer;width:34px;height:26px;position:relative}
+#burger i{position:absolute;left:0;right:0;height:1.5px;background:var(--text);transition:.35s}
+#burger i:nth-child(1){top:4px}#burger i:nth-child(2){top:12px}#burger i:nth-child(3){top:20px}
+#burger.on i:nth-child(1){top:12px;transform:rotate(45deg)}
+#burger.on i:nth-child(2){opacity:0}
+#burger.on i:nth-child(3){top:12px;transform:rotate(-45deg)}
+
+/* ---------- GENEL BÖLÜM ---------- */
+section{padding:clamp(70px,9vw,132px) clamp(18px,5vw,64px);position:relative}
+.wrap{max-width:1200px;margin:0 auto}
+.no{font-size:11px;font-weight:700;letter-spacing:.3em;color:var(--dim);display:block;margin-bottom:14px}
+.stitle{font-size:clamp(26px,3.6vw,42px);max-width:16ch}
+.stitle .serif{color:var(--accent-ink)}
+.sdesc{color:var(--muted);max-width:60ch;font-size:15.5px;margin-top:16px}
+.rule{height:1px;background:var(--line);width:100%}
+.head{display:grid;grid-template-columns:1fr auto;gap:30px;align-items:end;padding-bottom:26px;border-bottom:1px solid var(--line);margin-bottom:clamp(34px,5vw,58px)}
+.head .aside{font-size:13px;color:var(--muted);max-width:34ch;text-align:right}
+
+/* ---------- HERO ---------- */
+.hero{padding-top:clamp(50px,6vw,86px);padding-bottom:0}
+.hero-in{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(30px,5vw,70px);align-items:center}
+.kicker{display:inline-flex;align-items:center;gap:12px;font-size:11.5px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--accent-ink)}
+.kicker::before{content:"";width:30px;height:1px;background:var(--accent)}
+.hero h1{font-size:clamp(38px,6.4vw,80px);margin:22px 0 0;font-weight:700;letter-spacing:-.035em}
+.hero h1 .serif{color:var(--accent-ink);display:block}
+.hero p{color:var(--muted);max-width:46ch;margin-top:24px;font-size:16.5px}
+.hero .acts{display:flex;gap:14px;flex-wrap:wrap;margin-top:34px}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;font-size:14px;font-weight:600;border:1px solid var(--text);transition:.3s;border-radius:var(--radius)}
+.btn:hover{background:var(--text);color:var(--bg)}
+.btn.pri{background:var(--accent);border-color:var(--accent);color:var(--on-accent)}
+.btn.pri:hover{background:var(--accent-ink);border-color:var(--accent-ink);color:#fff}
+.hero-img{position:relative;aspect-ratio:3/4;overflow:hidden;border-radius:var(--radius);background:var(--ph)}
+.hero-img img{width:100%;height:100%;object-fit:cover}
+.hero-img figcaption{position:absolute;left:0;bottom:0;right:0;padding:16px 18px;background:linear-gradient(transparent,rgba(6,14,22,.72));color:#eef4ec;font-size:12px;letter-spacing:.1em;text-transform:uppercase;font-weight:600}
+.facts{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);margin-top:clamp(46px,6vw,80px)}
+.facts div{padding:26px 8px 0;border-right:1px solid var(--line2)}
+.facts div:last-child{border-right:0}
+.facts b{display:block;font-size:clamp(24px,3vw,34px);font-weight:700;letter-spacing:-.03em;color:var(--text)}
+.facts b em{font-style:normal;font-size:.5em;color:var(--muted);font-weight:600;margin-left:4px}
+.facts span{display:block;font-size:12px;color:var(--muted);margin-top:4px;letter-spacing:.04em}
+
+/* ---------- PERLİT NEDİR ---------- */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:clamp(30px,5vw,72px);align-items:start}
+.two p+p{margin-top:16px}
+.two p{color:var(--muted);font-size:15.5px}
+.dens{margin-top:34px;border-top:1px solid var(--line)}
+.dens .row{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:baseline;padding:16px 0;border-bottom:1px solid var(--line2)}
+.dens .row small{font-size:11px;letter-spacing:.24em;color:var(--dim);font-weight:700}
+.dens .row span{color:var(--muted);font-size:14px}
+.dens .row b{font-size:17px;font-weight:700;white-space:nowrap}
+.dens .row:last-child b{color:var(--accent-ink)}
+.fig{position:relative;overflow:hidden;border-radius:var(--radius);aspect-ratio:16/11;background:var(--ph)}
+.fig img{width:100%;height:100%;object-fit:cover}
+.figcap{font-size:12.5px;color:var(--dim);margin-top:12px;display:flex;gap:10px}
+.figcap b{color:var(--muted);font-weight:600;white-space:nowrap}
+
+/* ---------- ÖZELLİKLER ---------- */
+.feats{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line)}
+.feats article{padding:30px 26px 34px;border-right:1px solid var(--line2);position:relative;transition:background .35s}
+.feats article:last-child{border-right:0}
+.feats article:hover{background:var(--surface)}
+.feats .ic{width:30px;height:30px;color:var(--accent);margin-bottom:18px}
+.feats h3{font-size:16px;margin-bottom:10px;letter-spacing:-.01em}
+.feats p{font-size:13.5px;color:var(--muted);line-height:1.68}
+.feats article::after{content:"";position:absolute;left:0;top:-1px;width:0;height:1px;background:var(--accent);transition:width .45s cubic-bezier(.2,.8,.2,1)}
+.feats article:hover::after{width:100%}
+
+/* ---------- ÜRÜNLER (numaralı satır) ---------- */
+.plist{border-top:1px solid var(--line)}
+.prow{border-bottom:1px solid var(--line);}
+.phead{display:grid;grid-template-columns:52px 1.05fr 1.25fr auto;gap:clamp(14px,3vw,40px);align-items:center;padding:30px 4px;cursor:pointer;transition:padding .3s}
+.phead:hover{padding-left:14px}
+.phead .pn{font-size:12px;font-weight:700;letter-spacing:.2em;color:var(--dim)}
+.phead h3{font-size:clamp(19px,2.4vw,29px);font-weight:600;letter-spacing:-.025em}
+.phead .pd{font-size:13.5px;color:var(--muted)}
+.pmore{width:34px;height:34px;border:1px solid var(--line);border-radius:50%;display:grid;place-items:center;flex:none;transition:.35s}
+.pmore span{position:relative;width:12px;height:12px}
+.pmore span::before,.pmore span::after{content:"";position:absolute;background:var(--text);transition:.35s}
+.pmore span::before{left:0;right:0;top:5.5px;height:1px}
+.pmore span::after{top:0;bottom:0;left:5.5px;width:1px}
+.prow.open .pmore{background:var(--accent);border-color:var(--accent)}
+.prow.open .pmore span::before,.prow.open .pmore span::after{background:var(--on-accent)}
+.prow.open .pmore span::after{transform:scaleY(0)}
+.pbody{max-height:0;overflow:hidden;transition:max-height .55s cubic-bezier(.4,0,.2,1)}
+.pbody-in{display:grid;grid-template-columns:.95fr 1.05fr;gap:clamp(24px,4vw,54px);padding:6px 4px 44px}
+.pspecs{display:grid;grid-template-columns:1fr 1fr;gap:0 24px;border-top:1px solid var(--line2)}
+.pspecs div{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-bottom:1px solid var(--line2);font-size:13.5px}
+.pspecs div span{color:var(--muted)}
+.pspecs div b{font-weight:600;text-align:right}
+.puse{font-size:14px;color:var(--muted);margin-bottom:20px}
+.ptags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.ptags i{font-style:normal;font-size:11.5px;font-weight:600;letter-spacing:.06em;padding:6px 12px;border:1px solid var(--line);border-radius:99px;color:var(--muted)}
+.ptags i.hi{border-color:var(--accent);color:var(--accent-ink)}
+.pimg{position:relative;aspect-ratio:4/3;overflow:hidden;border-radius:var(--radius);background:var(--ph)}
+.pimg img{width:100%;height:100%;object-fit:cover}
+/* imleci takip eden önizleme */
+#peek{position:fixed;pointer-events:none;z-index:800;width:230px;aspect-ratio:3/4;overflow:hidden;border-radius:var(--radius);opacity:0;transform:translate(-50%,-50%) scale(.94);transition:opacity .3s,transform .3s;box-shadow:var(--sh2)}
+#peek img{width:100%;height:100%;object-fit:cover}
+#peek.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+
+/* ---------- TEKNİK TABLO ---------- */
+.tblwrap{overflow-x:auto;border-top:1px solid var(--line)}
+table{width:100%;border-collapse:collapse;min-width:720px;font-size:13.5px}
+th,td{text-align:left;padding:15px 16px;border-bottom:1px solid var(--line2);vertical-align:top}
+thead th{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--dim);font-weight:700;padding-top:22px;padding-bottom:14px}
+tbody th{font-weight:600;color:var(--muted);width:210px;font-size:13px}
+td b{font-weight:600}
+tbody tr:hover{background:var(--surface)}
+td.hi{color:var(--accent-ink);font-weight:700}
+.tnote{font-size:12px;color:var(--dim);margin-top:16px}
+
+/* ---------- GALERİ ---------- */
+.gal{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.gal figure{position:relative;overflow:hidden;border-radius:var(--radius);background:var(--ph)}
+.gal img{width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.2,.8,.2,1)}
+.gal figure:hover img{transform:scale(1.05)}
+.gal figure:nth-child(1){grid-column:span 4;aspect-ratio:16/9}
+.gal figure:nth-child(2){grid-column:span 2;aspect-ratio:3/4}
+.gal figure:nth-child(3){grid-column:span 2;aspect-ratio:1/1}
+.gal figure:nth-child(4){grid-column:span 2;aspect-ratio:1/1}
+.gal figure:nth-child(5){grid-column:span 2;aspect-ratio:1/1}
+.gal figcaption{position:absolute;left:12px;bottom:12px;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:#fff;background:rgba(8,16,26,.6);padding:5px 10px;border-radius:99px;backdrop-filter:blur(6px)}
+
+/* ---------- POLİTİKALAR ---------- */
+.pol{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--line)}
+.pol article{padding:32px 30px 36px;border-right:1px solid var(--line2)}
+.pol article:last-child{border-right:0}
+.pol small{font-size:11px;letter-spacing:.26em;color:var(--dim);font-weight:700}
+.pol h3{font-size:19px;margin:12px 0 14px}
+.pol p{font-size:13.5px;color:var(--muted)}
+.pol ul{list-style:none;margin-top:16px;font-size:13px;color:var(--muted)}
+.pol li{position:relative;padding-left:20px;margin-top:8px}
+.pol li::before{content:"";position:absolute;left:0;top:11px;width:9px;height:1px;background:var(--accent)}
+
+/* ---------- KURUMSAL ---------- */
+.corp{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,68px)}
+.mv{border-top:1px solid var(--line)}
+.mv div{padding:24px 0;border-bottom:1px solid var(--line2)}
+.mv h4{font-size:12px;letter-spacing:.26em;color:var(--accent-ink);margin-bottom:10px;font-weight:700}
+.mv p{font-size:14.5px;color:var(--muted)}
+.corpq{font-family:'Fraunces',serif;font-style:italic;font-size:clamp(20px,2.6vw,29px);line-height:1.44;font-weight:500}
+.corpq b{font-style:normal;font-weight:600;color:var(--accent-ink)}
+
+/* ---------- İLETİŞİM ---------- */
+.cont{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(30px,5vw,72px)}
+.cinfo{border-top:1px solid var(--line)}
+.cinfo .c{display:grid;grid-template-columns:110px 1fr;gap:16px;padding:17px 0;border-bottom:1px solid var(--line2);font-size:14px}
+.cinfo .c small{font-size:11px;letter-spacing:.2em;color:var(--dim);font-weight:700;padding-top:4px}
+.cinfo .c b{font-weight:500}
+form{display:grid;grid-template-columns:1fr 1fr;gap:0 22px}
+.f{position:relative;border-bottom:1px solid var(--line);padding-top:22px}
+.f.full{grid-column:1/-1}
+.f label{position:absolute;left:0;top:24px;font-size:14px;color:var(--dim);transition:.3s;pointer-events:none}
+.f input,.f textarea{width:100%;background:none;border:0;outline:none;padding:6px 0 12px;font-size:14.5px}
+.f textarea{resize:vertical;min-height:92px}
+.f input:focus+label,.f textarea:focus+label,.f input:valid+label,.f textarea:valid+label{top:2px;font-size:10.5px;letter-spacing:.2em;color:var(--accent-ink);font-weight:700;text-transform:uppercase}
+.f::after{content:"";position:absolute;left:0;bottom:-1px;width:0;height:1px;background:var(--accent);transition:width .4s}
+.f:focus-within::after{width:100%}
+form .sub{grid-column:1/-1;margin-top:28px}
+.kv{font-size:11.5px;color:var(--dim);grid-column:1/-1;margin-top:14px}
+
+/* ---------- FOOTER ---------- */
+footer{padding:clamp(52px,6vw,80px) clamp(18px,5vw,64px) 30px;border-top:1px solid var(--line);background:var(--bg2)}
+.fgrid{display:grid;grid-template-columns:1.35fr 1fr 1fr 1.15fr;gap:34px;max-width:1200px;margin:0 auto}
+.fgrid img{height:44px;width:auto;margin-bottom:18px}
+.fgrid p{font-size:13px;color:var(--muted);max-width:34ch}
+.fgrid h5{font-size:11px;letter-spacing:.24em;color:var(--dim);font-weight:700;margin-bottom:16px}
+.fgrid ul{list-style:none;font-size:13.5px}
+.fgrid li{margin-bottom:9px}
+.fgrid li a{color:var(--muted);transition:color .25s}
+.fgrid li a:hover{color:var(--accent-ink)}
+.fbot{max-width:1200px;margin:44px auto 0;padding-top:22px;border-top:1px solid var(--line2);display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap;font-size:12px;color:var(--dim)}
+.fbot a:hover{color:var(--accent-ink)}
+
+.badge{position:fixed;left:14px;bottom:14px;z-index:950;font-size:10.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;background:var(--text);color:var(--bg);padding:8px 14px;border-radius:99px;opacity:.82}
+
+/* ---------- görünürlük animasyonu ---------- */
+.rv{opacity:0;transform:translateY(22px);transition:opacity .8s cubic-bezier(.2,.8,.2,1),transform .8s cubic-bezier(.2,.8,.2,1)}
+.rv.in{opacity:1;transform:none}
+
+/* ---------- RESPONSIVE ---------- */
+@media(max-width:1080px){
+  .hero-in{grid-template-columns:1fr}
+  .hero-img{aspect-ratio:16/10;order:-1}
+  .feats{grid-template-columns:1fr 1fr}
+  .feats article:nth-child(2){border-right:0}
+  .feats article:nth-child(1),.feats article:nth-child(2){border-bottom:1px solid var(--line2)}
+  .phead{grid-template-columns:40px 1fr auto}
+  .phead .pd{display:none}
+  .pbody-in,.two,.corp,.cont{grid-template-columns:1fr}
+  .pol{grid-template-columns:1fr}
+  .pol article{border-right:0;border-bottom:1px solid var(--line2)}
+  .gal{grid-template-columns:repeat(4,1fr)}
+  .gal figure:nth-child(1){grid-column:span 4}
+  .gal figure:nth-child(2){grid-column:span 4;aspect-ratio:16/9}
+  .fgrid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:760px){
+  .tape{font-size:11px;gap:12px}
+  .tape ul{gap:14px}
+  .tape ul li:nth-child(1),.tape ul li:nth-child(3){display:none}
+  .hero p,.sdesc,.hero .lead{max-width:100%}
+  .nav ul{position:fixed;inset:0;background:var(--bg);flex-direction:column;justify-content:center;align-items:center;gap:26px;transform:translateX(100%);transition:transform .5s cubic-bezier(.6,0,.2,1),visibility .5s;z-index:880;visibility:hidden}
+  .nav ul.on{transform:none;visibility:visible}
+  .nav ul a{font-size:22px;font-weight:600;color:var(--text)}
+  #burger{display:block;z-index:890}
+  .nav .quote{display:none}
+  .facts{grid-template-columns:1fr 1fr}
+  .facts div:nth-child(2){border-right:0}
+  .facts div:nth-child(3),.facts div:nth-child(4){border-top:1px solid var(--line2);margin-top:22px}
+  .feats{grid-template-columns:1fr}
+  .feats article{border-right:0;border-bottom:1px solid var(--line2)}
+  .gal{grid-template-columns:1fr 1fr}
+  .gal figure{grid-column:span 1 !important;aspect-ratio:1/1 !important}
+  .gal figure:nth-child(1){grid-column:span 2 !important;aspect-ratio:16/10 !important}
+  form{grid-template-columns:1fr}
+  .fgrid{grid-template-columns:1fr}
+  #peek{display:none}
+  .head{grid-template-columns:1fr}
+  .head .aside{text-align:left}
+}
+</style>
+</head>
+<body>
+
+<div class="tape">
+  <ul>
+    <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg> Atatürk Mah. Turgut Özal Bulvarı, Ataşehir / İstanbul</li>
+    <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg> +90 216 455 86 63</li>
+    <li><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 6 10-6"/></svg> info@ulusalyapi.com</li>
+  </ul>
+  <div class="lang"><b>TR</b><span>/</span><span>EN</span></div>
+</div>
+
+<nav class="nav" id="nav">
+  <a class="brand" href="#"><img src="../Gorseller/logo.png" alt="Ulusal Perlit"></a>
+  <ul id="menu">
+    <li><a href="#perlit">Perlit Nedir</a></li>
+    <li><a href="#urunler">Ürünler</a></li>
+    <li><a href="#teknik">Teknik Veriler</a></li>
+    <li><a href="#galeri">Galeri</a></li>
+    <li><a href="#kurumsal">Kurumsal</a></li>
+    <li><a href="#iletisim">İletişim</a></li>
+  </ul>
+  <a class="quote" href="#iletisim">Teklif Alın <i></i></a>
+  <button id="burger" aria-label="Menü"><i></i><i></i><i></i></button>
+</nav>
+
+<main>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-in">
+      <div class="rv">
+        <span class="kicker">Ulusal Yapı Markası</span>
+        <h1>Doğal Yalıtım<br>Malzemesi ile<span class="serif">gelen konfor.</span></h1>
+        <p>Volkanik bir kayaçtan gelen hafiflik. Perlitli sıva, şap ve tarım perliti çözümleriyle yapınızı ısıya, sese ve ateşe karşı doğal yoldan koruyoruz.</p>
+        <div class="acts">
+          <a class="btn pri" href="#urunler">Ürünleri İnceleyin</a>
+          <a class="btn" href="#iletisim">Bize Ulaşın</a>
+        </div>
+      </div>
+      <figure class="hero-img rv">
+        <img src="../Gorseller/v-isisiva.jpg" alt="Ulusal Perlit perlitli dış cephe sıva harcı paletleri">
+        <figcaption>Perlitli Dış Cephe Sıva Harcı · 13 kg</figcaption>
+      </figure>
+    </div>
+    <div class="facts rv">
+      <div><b>A1</b><span>Yangına tepki sınıfı — yanmaz</span></div>
+      <div><b>400<em>kg/m³</em></b><span>Isı yalıtım sıvası birim ağırlığı</span></div>
+      <div><b>2–3<em>kat</em></b><span>Klasik sıvaya göre daha hafif</span></div>
+      <div><b>%90<em>+</em></b><span>Tarım perlitinde gözeneklilik</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PERLİT NEDİR ================= -->
+<section id="perlit">
+  <div class="wrap">
+    <div class="head rv">
+      <div><span class="no">01 — HAMMADDE</span><h2 class="stitle">Perlit, ısıyla <span class="serif">genleşen</span> volkanik camdır</h2></div>
+      <p class="aside">Isıtıldığında hacmi kat kat büyüyen, hafif ve gözenekli hâle gelen doğal bir mineral.</p>
+    </div>
+    <div class="two">
+      <div class="rv">
+        <p>Perlit, asidik bir volkanik camdır. Isıyla genleşme özelliği olan, genleştirildiğinde çok hafif ve gözenekli hâle geçen bir kayaçtır. Bu genleşme sırasında yapısında milyonlarca kapalı hava hücresi oluşur; ısı ve ses yalıtımını sağlayan da tam olarak bu gözenekli yapıdır.</p>
+        <p>Doğal bir maden olduğu için kanserojen madde içermez, kendi karbon salınımını yapmaz. Isıtma ve soğutma ihtiyacını düşürerek binanın toplam karbon ayak izini de azaltır.</p>
+        <div class="dens">
+          <div class="row"><small>HAM</small><span>İşlenmemiş perlit kayacı</span><b>2000 – 2100 kg/m³</b></div>
+          <div class="row"><small>ELENMİŞ</small><span>Kırılmış ve elenmiş hâli</span><b>2200 – 2400 kg/m³</b></div>
+          <div class="row"><small>GENLEŞMİŞ</small><span>Isıl işlemden sonra</span><b>180 kg/m³'e kadar</b></div>
+        </div>
+      </div>
+      <div class="rv">
+        <figure class="fig"><img src="../Gorseller/band-granul.jpg" alt="Genleştirilmiş perlit granülleri"></figure>
+        <div class="figcap"><b>Genleştirilmiş perlit</b><span>Gözenekli yapısı sayesinde ısıyı, sesi ve suyu içeri almaz; hafifliğiyle taşımayı ve uygulamayı kolaylaştırır.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ÖZELLİKLER ================= -->
+<section id="ozellikler" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="head rv">
+      <div><span class="no">02 — NEDEN PERLİT</span><h2 class="stitle">Dört maddede <span class="serif">malzemenin farkı</span></h2></div>
+    </div>
+    <div class="feats rv">
+      <article>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2s4 4.5 4 8a4 4 0 0 1-8 0c0-1.4.6-2.7 1.3-3.8"/><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.7-2-5"/><path d="M12 22a7 7 0 0 1-7-7c0-2 1-3.7 2-5"/></svg>
+        <h3>Yanmazlık</h3>
+        <p>Binaların Yangından Korunması Hakkında Yönetmelik'in (BYKHY) istediği <b>A1 sınıfı yanmaz malzeme</b> kullanımını karşılar. Yangının gelişimine neden olmaz, aksine geciktirir.</p>
+      </article>
+      <article>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg>
+        <h3>Ekolojik</h3>
+        <p>Doğal bir maden olması sebebiyle kanserojen madde içermez. Kendi karbon salınımını yapmadığı gibi, ısıtma-soğutma ihtiyacını düşürerek karbon salınımını azaltır.</p>
+      </article>
+      <article>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg>
+        <h3>Yalıtım</h3>
+        <p>Düşük ısı iletkenliği ile iyi bir ısı yalıtımı sağlar; gözenekli yapısıyla ses yalıtımı yapar. Su itici özelliğiyle bünyesine su geçirmez.</p>
+      </article>
+      <article>
+        <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 20h16"/><path d="m6 16 6-12 6 12"/><path d="M9 16h6"/></svg>
+        <h3>Uygulama Kolaylığı</h3>
+        <p>Hafifliği ile kolay taşıma ve istifleme imkânı sunar. Dış cephede kara sıva, iç cephede alçı sıva gibi; el veya makine ile uygulanır.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ÜRÜNLER ================= -->
+<section id="urunler">
+  <div class="wrap">
+    <div class="head rv">
+      <div><span class="no">03 — ÜRÜNLER</span><h2 class="stitle">Dört ürün, <span class="serif">tek malzeme felsefesi</span></h2></div>
+      <p class="aside">Satırlara tıklayarak teknik değerleri açabilirsiniz.</p>
+    </div>
+
+    <div class="plist rv">
+
+      <div class="prow">
+        <div class="phead" data-img="../Gorseller/v-isisiva.jpg">
+          <span class="pn">01</span>
+          <h3>Perlitli Isı Yalıtım Sıvası</h3>
+          <span class="pd">Dış cephede kullanılan hafif, ısı yalıtımlı ve üstün performanslı sıva harcı</span>
+          <span class="pmore"><span></span></span>
+        </div>
+        <div class="pbody"><div class="pbody-in">
+          <div>
+            <p class="puse">Çimento esaslı ve perlitli, manuel veya makine ile uygulanabilen, ısı ve ses yalıtımı sağlayan sıva harcıdır. İç ve dış cephelerde tuğla, beton, briket ve gaz beton yüzeylerde yalıtım sıvası olarak kullanılır.</p>
+            <div class="pspecs">
+              <div><span>Renk</span><b>Beyaz</b></div>
+              <div><span>Birim yığın ağırlığı</span><b>400 ± 50 kg/m³</b></div>
+              <div><span>Basınç dayanımı</span><b>CS II</b></div>
+              <div><span>Isıl iletkenlik</span><b>T1</b></div>
+              <div><span>Yangına tepki</span><b>A1</b></div>
+              <div><span>Uygulama kalınlığı</span><b>10 – 30 mm</b></div>
+              <div><span>Sarfiyat (1 cm)</span><b>4 – 4,5 kg/m²</b></div>
+              <div><span>Ambalaj</span><b>13 kg kraft torba</b></div>
+            </div>
+            <div class="ptags"><i class="hi">A1 Yanmaz</i><i>2–3 kat hafif</i><i>El + makine</i><i>Kuruma 4–6 gün</i><i>Raf ömrü 1 yıl</i></div>
+          </div>
+          <figure class="pimg"><img loading="lazy" src="../Gorseller/p-isisiva.jpg" alt="Perlitli ısı yalıtım sıvası"></figure>
+        </div></div>
+      </div>
+
+      <div class="prow">
+        <div class="phead" data-img="../Gorseller/v-icsiva.jpg">
+          <span class="pn">02</span>
+          <h3>Perlitli İç Sıva</h3>
+          <span class="pd">İç cephelerde kullanılan hafif, nefes alan, ses yutucu özellikleriyle öne çıkan sıva harcı</span>
+          <span class="pmore"><span></span></span>
+        </div>
+        <div class="pbody"><div class="pbody-in">
+          <div>
+            <p class="puse">El ve makine ile uygulanabilen, ses ve ısı yalıtımı sağlayan çimento esaslı perlitli hazır sıva harcıdır. İç mekânlarda kaba sıva olarak uygulanır.</p>
+            <div class="pspecs">
+              <div><span>Renk</span><b>Beyaz</b></div>
+              <div><span>Kuru birim yığın ağırlığı</span><b>500 ± 150 kg/m³</b></div>
+              <div><span>Basınç dayanımı</span><b>CS I</b></div>
+              <div><span>Isıl iletkenlik</span><b>T1</b></div>
+              <div><span>Yangına tepki</span><b>A1</b></div>
+              <div><span>Uygulama kalınlığı</span><b>15 – 20 mm</b></div>
+              <div><span>Sarfiyat (1 cm)</span><b>4,5 – 5 kg/m²</b></div>
+              <div><span>Ambalaj</span><b>16 kg kraft torba</b></div>
+            </div>
+            <div class="ptags"><i class="hi">A1 Yanmaz</i><i>Nefes alır</i><i>Ses yutucu</i><i>Kuruma 4–6 gün</i><i>Shrinkli palet</i></div>
+          </div>
+          <figure class="pimg"><img loading="lazy" src="../Gorseller/p-icsiva.jpg" alt="Perlitli iç cephe sıva harcı"></figure>
+        </div></div>
+      </div>
+
+      <div class="prow">
+        <div class="phead" data-img="../Gorseller/v-icsiva-detay.jpg">
+          <span class="pn">03</span>
+          <h3>Perlitli Şap</h3>
+          <span class="pd">Teras ve döşemelerde binanın yükünü hafifleten, ses yalıtımına katkı sağlayan şap harcı</span>
+          <span class="pmore"><span></span></span>
+        </div>
+        <div class="pbody"><div class="pbody-in">
+          <div>
+            <p class="puse">Isı ve ses yalıtımı sağlayan, çimento esaslı ve perlitli, manuel veya makine ile uygulanabilen hafif yalıtım şapıdır. Hafif ve orta yoğunluklu yaya trafiğine maruz zeminlerde; seramik, parke ve laminat kaplamaları öncesinde kullanılır.</p>
+            <div class="pspecs">
+              <div><span>Renk</span><b>Gri</b></div>
+              <div><span>Kuru birim yığın ağırlığı</span><b>500 ± 70 kg/m³</b></div>
+              <div><span>Basınç dayanımı</span><b>C5 · TS EN 13813</b></div>
+              <div><span>Yangına tepki</span><b>A1</b></div>
+              <div><span>Uygulama kalınlığı</span><b>30 – 70 mm</b></div>
+              <div><span>Sarfiyat (1 cm)</span><b>5,5 – 6,5 kg/m²</b></div>
+              <div><span>Kuruma süresi</span><b>4 – 6 gün</b></div>
+              <div><span>Ambalaj</span><b>20 kg kraft torba</b></div>
+            </div>
+            <div class="ptags"><i class="hi">A1 Yanmaz</i><i>5–7 kat hafif</i><i>Hızlı uygulama</i><i>Ses yalıtımı</i></div>
+          </div>
+          <figure class="pimg"><img loading="lazy" src="../Gorseller/p-sap.jpg" alt="Perlitli şap"></figure>
+        </div></div>
+      </div>
+
+      <div class="prow">
+        <div class="phead" data-img="../Gorseller/p-tarim.jpg">
+          <span class="pn">04</span>
+          <h3>Tarım Perliti</h3>
+          <span class="pd">Seralarda toprak düzenleyici olarak kullanılan, radyoaktif içermeyen hafif perlit</span>
+          <span class="pmore"><span></span></span>
+        </div>
+        <div class="pbody"><div class="pbody-in">
+          <div>
+            <p class="puse">Seracılık, sebze yetiştiriciliği, fidecilik, çiçekçilik, mantarcılık ve topraksız tarım uygulamalarında toprak düzenleyicisi olarak kullanılan hafif malzemedir.</p>
+            <div class="pspecs">
+              <div><span>Toplam gözeneklilik</span><b>%90 üzeri</b></div>
+              <div><span>Havalanma gözenekliliği</span><b>≈ %60</b></div>
+              <div><span>pH değeri</span><b>6,5 – 7,5 (nötr)</b></div>
+              <div><span>Çözünebilir iyon</span><b>Çok düşük</b></div>
+              <div><span>Radyoaktivite</span><b>İçermez</b></div>
+              <div><span>Hastalık / yabancı ot</span><b>Taşımaz</b></div>
+            </div>
+            <div class="ptags"><i class="hi">İnorganik</i><i>Tuz ve alkalilik yapmaz</i><i>Kökü ısı şokundan korur</i><i>Topraksız tarım</i></div>
+          </div>
+          <figure class="pimg"><img loading="lazy" src="../Gorseller/p-tarim.jpg" alt="Tarım perliti"></figure>
+        </div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================= TEKNİK TABLO ================= -->
+<section id="teknik" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="head rv">
+      <div><span class="no">04 — TEKNİK VERİLER</span><h2 class="stitle">Ürünleri <span class="serif">yan yana</span> karşılaştırın</h2></div>
+      <p class="aside">Değerler ürün teknik föylerinden alınmıştır; şantiye koşullarına göre değişiklik gösterebilir.</p>
+    </div>
+    <div class="tblwrap rv">
+      <table>
+        <thead><tr><th></th><th>Isı Yalıtım Sıvası</th><th>İç Sıva</th><th>Şap</th></tr></thead>
+        <tbody>
+          <tr><th>Kullanım yeri</th><td>Dış + iç cephe</td><td>İç cephe (kaba sıva)</td><td>Teras ve döşeme</td></tr>
+          <tr><th>Renk</th><td>Beyaz</td><td>Beyaz</td><td>Gri</td></tr>
+          <tr><th>Kuru birim yığın ağırlığı</th><td><b>400 ± 50</b> kg/m³</td><td><b>500 ± 150</b> kg/m³</td><td><b>500 ± 70</b> kg/m³</td></tr>
+          <tr><th>Basınç dayanımı</th><td>CS II</td><td>CS I</td><td>C5 · TS EN 13813</td></tr>
+          <tr><th>Isıl iletkenlik sınıfı</th><td>T1</td><td>T1</td><td>—</td></tr>
+          <tr><th>Yangına tepki sınıfı</th><td class="hi">A1</td><td class="hi">A1</td><td class="hi">A1</td></tr>
+          <tr><th>Uygulama kalınlığı</th><td>10 – 30 mm</td><td>15 – 20 mm</td><td>30 – 70 mm</td></tr>
+          <tr><th>Sarfiyat (1 cm için)</th><td>4 – 4,5 kg/m²</td><td>4,5 – 5 kg/m²</td><td>5,5 – 6,5 kg/m²</td></tr>
+          <tr><th>Kuruma süresi</th><td>4 – 6 gün</td><td>4 – 6 gün</td><td>4 – 6 gün</td></tr>
+          <tr><th>Çalışılabilme süresi</th><td>20 dakika</td><td>—</td><td>—</td></tr>
+          <tr><th>Ambalaj</th><td>13 kg kraft torba</td><td>16 kg kraft torba</td><td>20 kg kraft torba</td></tr>
+          <tr><th>Raf ömrü</th><td>1 yıl</td><td>1 yıl</td><td>1 yıl</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="tnote rv">Depolama: kapalı orijinal ambalajında, serin ve kuru ortamda saklanmalıdır. Raf ömrü üretim tarihinden itibaren 1 yıldır.</p>
+  </div>
+</section>
+
+<!-- ================= GALERİ ================= -->
+<section id="galeri">
+  <div class="wrap">
+    <div class="head rv">
+      <div><span class="no">05 — SAHADAN</span><h2 class="stitle">Üretimden <span class="serif">sevkiyata</span></h2></div>
+    </div>
+    <div class="gal rv">
+      <figure><img loading="lazy" src="../Gorseller/band-depo.jpg" alt="Ulusal Perlit depo"><figcaption>Depo</figcaption></figure>
+      <figure><img loading="lazy" src="../Gorseller/v-isisiva.jpg" alt="Dış cephe sıva harcı paleti"><figcaption>Dış cephe · 13 kg</figcaption></figure>
+      <figure><img loading="lazy" src="../Gorseller/galeri-4.jpg" alt="İç cephe sıva harcı"><figcaption>İç cephe</figcaption></figure>
+      <figure><img loading="lazy" src="../Gorseller/galeri-1.jpg" alt="Konteyner yükleme"><figcaption>İhracat</figcaption></figure>
+      <figure><img loading="lazy" src="../Gorseller/band-maden.jpg" alt="Perlit kayacı"><figcaption>Hammadde</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<!-- ================= POLİTİKALAR ================= -->
+<section id="politikalar" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="head rv">
+      <div><span class="no">06 — POLİTİKALARIMIZ</span><h2 class="stitle">Sürdürülebilir ve <span class="serif">ilkeli üretim</span></h2></div>
+    </div>
+    <div class="pol rv">
+      <article>
+        <small>KALİTE</small>
+        <h3>Kalite Politikası</h3>
+        <p>Üstlendiği her işi yaparken müşteri taleplerini ve yürürlükteki yasal mevzuat şartlarını karşılayan ürünler sunar.</p>
+        <ul>
+          <li>Tecrübeli yönetim, teknik bilgiye sahip iş gücü</li>
+          <li>Sürekli öğrenme ve gelişim</li>
+          <li>Ürün kalitesinde süreklilik</li>
+          <li>Müşteri memnuniyetini artıran etkin sistemler</li>
+        </ul>
+      </article>
+      <article>
+        <small>İSG</small>
+        <h3>İş Sağlığı ve Güvenliği</h3>
+        <p>Yaralanmaları ve sağlık bozulmalarını önlemek için her türlü önlemi alır.</p>
+        <ul>
+          <li>Eğitim ve farkındalıkla bireysel sorumluluk bilinci</li>
+          <li>Çalışan ve etkilenen tarafların korunması</li>
+          <li>Tehlikelerin erken aşamada kontrolü</li>
+          <li>Can ve mal güvenliği için sürekli izleme</li>
+        </ul>
+      </article>
+      <article>
+        <small>ÇEVRE</small>
+        <h3>Çevre Politikası</h3>
+        <p>Çalışmaları için gerekli enerji ve doğal kaynakları en etkin şekilde kullanır; israfı önler.</p>
+        <ul>
+          <li>Çevre bilinci konusunda sürekli eğitim</li>
+          <li>Kontrollü atık yönetimi</li>
+          <li>Hava, su ve toprak kirliliğinin önlenmesi</li>
+          <li>Tehlikelerin erken tespiti ve izlenmesi</li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ================= KURUMSAL ================= -->
+<section id="kurumsal">
+  <div class="wrap">
+    <div class="head rv">
+      <div><span class="no">07 — KURUMSAL</span><h2 class="stitle">Ulusal Yapı'nın <span class="serif">perlit markası</span></h2></div>
+    </div>
+    <div class="corp">
+      <div class="rv">
+        <p class="corpq">Ulusal Perlit, inşaat sektöründe uzun yıllar tecrübesi olan, sektöre hem malzeme üretimi ve tedariği hem de uygulama alanlarında hizmetlerde bulunmuş <b>Ulusal Yapı</b>'nın bir markasıdır.</p>
+        <figure class="fig" style="margin-top:34px;aspect-ratio:16/9"><img loading="lazy" src="../Gorseller/band-ihracat.jpg" alt="Ulusal Perlit sevkiyat"></figure>
+      </div>
+      <div class="mv rv">
+        <div><h4>MİSYONUMUZ</h4><p>Yapı sektöründe satış ve uygulamayı en iyi hizmet kalitesiyle müşterilerimize sunmak; kurumsal ve ilkeli yaklaşımımızla sektörde fark yaratmak.</p></div>
+        <div><h4>VİZYONUMUZ</h4><p>Çağdaş ve yenilikçi yapımızla, faaliyet gösterdiğimiz sektörlerde daima en iyisini gerçekleştirerek çalışanlarımıza, müşterilerimize ve ülkemize katma değer sağlamak.</p></div>
+        <div><h4>ÜNVAN</h4><p>Ulusal Yapı Danışmanlık ve Dış Tic. Ltd. Şti.</p></div>
+        <div><h4>BELGELER</h4><p>E-katalog, ürün teknik föyleri ve uygulama videoları için bizimle iletişime geçebilirsiniz.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= İLETİŞİM ================= -->
+<section id="iletisim" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="head rv">
+      <div><span class="no">08 — İLETİŞİM</span><h2 class="stitle">Projeniz için <span class="serif">bir telefon kadar yakınız</span></h2></div>
+    </div>
+    <div class="cont">
+      <div class="cinfo rv">
+        <div class="c"><small>ADRES</small><b>Atatürk Mah. Turgut Özal Bulvarı 42 A Ada Gardenya 7/1 Plaza K:6 D:42 Ataşehir / İSTANBUL</b></div>
+        <div class="c"><small>TELEFON</small><b>+90 216 455 86 63<br>+90 216 455 88 35</b></div>
+        <div class="c"><small>FAKS</small><b>+90 216 455 82 94</b></div>
+        <div class="c"><small>E-POSTA</small><b>info@ulusalyapi.com</b></div>
+        <div class="c"><small>ÜNVAN</small><b>Ulusal Yapı Danışmanlık ve Dış Tic. Ltd. Şti.</b></div>
+      </div>
+      <form class="rv" onsubmit="return false">
+        <div class="f"><input required id="ad"><label for="ad">Adınız Soyadınız</label></div>
+        <div class="f"><input required id="mail" type="email"><label for="mail">E-posta adresiniz</label></div>
+        <div class="f full"><input required id="konu"><label for="konu">Konu</label></div>
+        <div class="f full"><textarea required id="msg"></textarea><label for="msg">İletiniz</label></div>
+        <div class="sub"><button class="btn pri" type="submit">Mesajı Gönder</button></div>
+        <p class="kv">Gönderdiğiniz bilgiler KVKK aydınlatma metni kapsamında işlenir.</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="fgrid">
+    <div>
+      <img src="../Gorseller/logo.png" alt="Ulusal Perlit">
+      <p>Doğal yalıtım malzemesi ile gelen konfor. Perlitli sıva, şap ve tarım perliti çözümleri.</p>
+    </div>
+    <div>
+      <h5>ÜRÜNLER</h5>
+      <ul>
+        <li><a href="#urunler">Perlitli Isı Yalıtım Sıvası</a></li>
+        <li><a href="#urunler">Perlitli İç Sıva</a></li>
+        <li><a href="#urunler">Perlitli Şap</a></li>
+        <li><a href="#urunler">Tarım Perliti</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>KURUMSAL</h5>
+      <ul>
+        <li><a href="#kurumsal">Hakkımızda</a></li>
+        <li><a href="#politikalar">Politikalarımız</a></li>
+        <li><a href="#galeri">Galeri</a></li>
+        <li><a href="#teknik">E-Katalog</a></li>
+      </ul>
+    </div>
+    <div>
+      <h5>İLETİŞİM</h5>
+      <ul>
+        <li>Atatürk Mah. Turgut Özal Bulvarı 42 A Ada Gardenya 7/1 Plaza K:6 D:42 Ataşehir / İstanbul</li>
+        <li><a href="tel:+902164558663">+90 216 455 86 63</a></li>
+        <li><a href="mailto:info@ulusalyapi.com">info@ulusalyapi.com</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="fbot">
+    <span>© 2026 Ulusal Perlit — Ulusal Yapı Danışmanlık ve Dış Tic. Ltd. Şti.</span>
+    <span><a href="#">KVKK Aydınlatma Metni</a> · <a href="#">Çerez Politikası</a></span>
+  </div>
+</footer>
+
+<div id="peek"><img alt=""></div>
+<div class="badge">Tasarım 1 · Sade</div>
+
+<script>
+/* menü */
+const nav=document.getElementById('nav'), menu=document.getElementById('menu'), burger=document.getElementById('burger');
+addEventListener('scroll',()=>nav.classList.toggle('stuck',scrollY>10),{passive:true});
+burger.onclick=()=>{menu.classList.toggle('on');burger.classList.toggle('on')};
+menu.querySelectorAll('a').forEach(a=>a.onclick=()=>{menu.classList.remove('on');burger.classList.remove('on')});
+
+/* ürün akordiyonu */
+document.querySelectorAll('.prow').forEach(row=>{
+  const head=row.querySelector('.phead'), body=row.querySelector('.pbody');
+  head.onclick=()=>{
+    const open=row.classList.contains('open');
+    document.querySelectorAll('.prow.open').forEach(r=>{r.classList.remove('open');r.querySelector('.pbody').style.maxHeight=0});
+    if(!open){row.classList.add('open');body.style.maxHeight=body.scrollHeight+'px'}
+  };
+});
+addEventListener('resize',()=>{const r=document.querySelector('.prow.open');if(r){const b=r.querySelector('.pbody');b.style.maxHeight=b.scrollHeight+'px'}});
+
+/* imleci takip eden önizleme */
+const peek=document.getElementById('peek'), peekImg=peek.querySelector('img');
+document.querySelectorAll('.phead').forEach(h=>{
+  h.addEventListener('mouseenter',()=>{ if(matchMedia('(max-width:760px)').matches) return;
+    peekImg.src=h.dataset.img; peek.classList.add('on'); });
+  h.addEventListener('mouseleave',()=>peek.classList.remove('on'));
+  h.addEventListener('mousemove',e=>{peek.style.left=e.clientX+'px';peek.style.top=e.clientY+'px'});
+});
+
+/* görünürlük */
+const io=new IntersectionObserver(en=>en.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.rv').forEach((el,i)=>{el.style.transitionDelay=(i%4)*60+'ms';io.observe(el)});
+</script>
+</body>
+</html>
