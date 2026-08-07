@@ -300,6 +300,36 @@ footer{padding:clamp(50px,6vw,78px) clamp(18px,5vw,60px) 28px;background:var(--b
 .badge{position:fixed;left:14px;bottom:14px;z-index:950;font-size:10.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;
   background:var(--text);color:var(--bg);padding:8px 15px;border-radius:99px;opacity:.85}
 
+/* ===== KATALOG FAB (sağ alt) ===== */
+.fab{position:fixed;right:20px;bottom:20px;z-index:940}
+.fab-main{display:inline-flex;align-items:center;gap:10px;padding:15px 24px;border:0;cursor:pointer;
+  border-radius:99px;background:var(--grad);color:var(--on-accent);font-family:inherit;
+  font-size:14px;font-weight:800;letter-spacing:.02em;box-shadow:0 14px 34px rgba(var(--shadow),.35);
+  transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s;position:relative;z-index:2}
+.fab-main:hover{transform:translateY(-3px);box-shadow:0 20px 44px rgba(var(--shadow),.42)}
+.fab-main svg{flex:none;transition:transform .35s cubic-bezier(.2,.8,.2,1)}
+.fab.open .fab-main svg{transform:rotate(180deg)}
+/* dil topları: kapalıyken butonun merkezinde gizli, açılınca yay üzerinde */
+.fab-ball{position:absolute;width:46px;height:46px;border-radius:50%;overflow:visible;cursor:pointer;
+  right:64px;bottom:4px;z-index:1;transform:translate(0,0) scale(.2);opacity:0;pointer-events:none;
+  transition:transform .45s cubic-bezier(.34,1.4,.35,1),opacity .3s;
+  box-shadow:0 10px 26px rgba(var(--shadow),.32)}
+.fab.open .fab-ball{opacity:1;pointer-events:auto}
+.fab.open .fab-ball.b1{transform:translate(56px,-70px) scale(1);transition-delay:.02s}
+.fab.open .fab-ball.b2{transform:translate(-6px,-66px) scale(1);transition-delay:.09s}
+.fab.open .fab-ball.b3{transform:translate(-64px,-40px) scale(1);transition-delay:.16s}
+.fab-ball .fl{width:46px;height:46px;border-radius:50%;overflow:hidden;display:block;
+  border:2.5px solid var(--surface);box-shadow:inset 0 0 0 1px var(--line);transition:transform .25s}
+.fab-ball:hover .fl{transform:scale(1.12)}
+.fab-ball .tip{position:absolute;right:54px;top:50%;transform:translateY(-50%);white-space:nowrap;
+  font-size:11px;font-weight:800;letter-spacing:.08em;background:var(--text);color:var(--bg);
+  padding:5px 11px;border-radius:99px;opacity:0;pointer-events:none;transition:opacity .25s}
+.fab-ball:hover .tip{opacity:.92}
+@media(max-width:560px){
+  .fab{right:14px;bottom:14px}
+  .fab-main{padding:13px 19px;font-size:13px}
+}
+
 .rv{opacity:0;transform:translateY(22px);transition:opacity .85s cubic-bezier(.2,.8,.2,1),transform .85s cubic-bezier(.2,.8,.2,1)}
 .rv.in{opacity:1;transform:none}
 
@@ -646,6 +676,41 @@ footer{padding:clamp(50px,6vw,78px) clamp(18px,5vw,60px) 28px;background:var(--b
 
 <div class="badge">Tasarım 3 · Ada Header</div>
 
+<!-- Katalog FAB: PDF linkleri gelince # yerine yazılacak -->
+<div class="fab" id="fab">
+  <a class="fab-ball b1" href="#" title="Türkçe Katalog" aria-label="Türkçe Katalog">
+    <svg class="fl" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="60" height="60" fill="#E30A17"/>
+      <circle cx="23" cy="30" r="13" fill="#fff"/>
+      <circle cx="26.8" cy="30" r="10.6" fill="#E30A17"/>
+      <polygon fill="#fff" points="46.7,30 42.4,31.4 42.4,35.9 39.8,32.3 35.5,33.6 38.1,30 35.5,26.4 39.8,27.7 42.4,24.1 42.4,28.6"/>
+    </svg>
+    <span class="tip">Türkçe</span>
+  </a>
+  <a class="fab-ball b2" href="#" title="English Catalogue" aria-label="English Catalogue">
+    <svg class="fl" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="60" height="60" fill="#012169"/>
+      <path stroke="#fff" stroke-width="11" d="M0 0l60 60M60 0L0 60"/>
+      <path stroke="#C8102E" stroke-width="5" d="M0 0l60 60M60 0L0 60"/>
+      <path stroke="#fff" stroke-width="18" d="M30 0v60M0 30h60"/>
+      <path stroke="#C8102E" stroke-width="10" d="M30 0v60M0 30h60"/>
+    </svg>
+    <span class="tip">English</span>
+  </a>
+  <a class="fab-ball b3" href="#" title="Каталог на русском" aria-label="Каталог на русском">
+    <svg class="fl" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" role="img">
+      <rect width="60" height="20" y="0" fill="#fff"/>
+      <rect width="60" height="20" y="20" fill="#0039A6"/>
+      <rect width="60" height="20" y="40" fill="#D52B1E"/>
+    </svg>
+    <span class="tip">Русский</span>
+  </a>
+  <button class="fab-main" id="fabBtn" type="button" aria-expanded="false" aria-label="Katalog İndir — dil seçin">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0 5-5m-5 5-5-5"/><path d="M4 19h16"/></svg>
+    Katalog İndir
+  </button>
+</div>
+
 <script>
 /* ---- ada + mega panel ---- */
 const island=document.getElementById('island'),mbtn=document.getElementById('mbtn'),
@@ -692,6 +757,21 @@ targets.forEach(t=>t&&so.observe(t));
 /* ---- görünürlük ---- */
 const io=new IntersectionObserver(en=>en.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.1});
 document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+/* ---- katalog fab ---- */
+const fab=document.getElementById('fab'),fabBtn=document.getElementById('fabBtn');
+fabBtn.addEventListener('click',e=>{
+  e.stopPropagation();
+  const o=!fab.classList.contains('open');
+  fab.classList.toggle('open',o);
+  fabBtn.setAttribute('aria-expanded',o);
+});
+document.addEventListener('click',e=>{
+  if(!fab.contains(e.target)){fab.classList.remove('open');fabBtn.setAttribute('aria-expanded','false');}
+});
+addEventListener('keydown',e=>{
+  if(e.key==='Escape'){fab.classList.remove('open');fabBtn.setAttribute('aria-expanded','false');}
+});
 </script>
 </body>
 </html>
